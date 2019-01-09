@@ -1,0 +1,1 @@
+public enum FormatEnumAplha { string, integer, mix };
