@@ -3,7 +3,6 @@ import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,8 +83,8 @@ public class CrudAlgoritm implements CrudInterface{
 	}
 	
 	public Map<String,String> getHashMap(){
-		fileNew.putAll(alpha);
-	return fileNew;
+		
+	return new HashMap<String,String>(alpha);
 	}
 	
 	public String getKey(String key)
@@ -113,7 +112,7 @@ public class CrudAlgoritm implements CrudInterface{
 			
 		} 
 		catch (Exception e) {
-			return(e.getMessage());
+			return("Ошибка при добавлении ключа");
 		}
 	}
 	
@@ -140,7 +139,7 @@ public class CrudAlgoritm implements CrudInterface{
 				else return("Данный ключ не обнаружен");
 	        }
 	        catch(Exception e){
-	            return(e.getMessage());
+	            return("Ошибка при удалении ключа");
 	        }
 	}
 	
