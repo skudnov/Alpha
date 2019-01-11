@@ -3,7 +3,7 @@ import java.util.Scanner;
 import java.util.List;
 public class Operation  implements OperationInterface {
 	private CrudInterface alg;
-	private CheckInputAlpha input = new CheckInputAlpha();
+	private CheckInputAlphaInterface input = new CheckInputAlpha();
 	private static Scanner sc = new Scanner(System.in);
 	Operation(CrudInterface alg)
 	{
