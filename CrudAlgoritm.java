@@ -29,7 +29,8 @@ public class CrudAlgoritm implements CrudInterface{
 	}
 	
 	public String openFile() {
-		
+		try
+				{
 			File dir = new File(".//"+directory);
 			
 			if(dir.isDirectory())
@@ -54,28 +55,29 @@ public class CrudAlgoritm implements CrudInterface{
 			else return "В данном каталоге нет файлов удовлетроворющих условию (.txt)";
          }
 		 else return ("Не является директорией"); 
+		 
+		 }
+        catch(IOException ex){
+             
+            return ex.getMessage();
+        } 
 		
 		
 	}
 	
-	public void loadHash(String fileName){
+	public void loadHash(String fileName) throws IOException {
 		
-			try
-				{
+			
 		FileInputStream fstream = new FileInputStream(".//"+directory+"//"+fileName);
 				br = new BufferedReader(new InputStreamReader(fstream));
 				String strLine;
 				while ((strLine = br.readLine()) != null){
 				   String[] count = strLine.split(" ");
+				   if (count.length==2){
 				   fileNew.put(count[0], count[1]);				   
+				   }
 				}
-				}
-        catch(IOException ex){
-             
-            System.out.println("Ошибка ввода данных");
-        } 
 				
-	 
 	}
 	
 	public List<String> getFileName(){

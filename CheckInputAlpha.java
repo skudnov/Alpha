@@ -4,26 +4,20 @@ public class CheckInputAlpha implements CheckInputAlphaInterface{
 	CheckInputAlpha(){}
 	
 	
-	public FormatEnumAplha checkInputAdd(String key,String value){
-		if(key.matches(validationString)&& value.matches(validationString)){
+	public FormatEnumAplha checkInputAdd(String key){
+		if(key.matches(validationString)){
 				return FormatEnumAplha.string;
 		}
-		else if(key.matches(validationInt)&&value.matches(validationInt)) {
+		else if(key.matches(validationInt)) {
 				return FormatEnumAplha.integer;
 		}
 			return FormatEnumAplha.mix;
 	}
 	
-	public boolean checkStringLength(int stringKeyLength, String key,String value){
-		if (key.length()<=stringKeyLength && value.length()<=stringKeyLength)
+	public boolean checkLength(int stringKeyLength, String key) throws Exception{
+		if (key.length()<=stringKeyLength)
 			return true;
-		else return false;
-	}
-	
-	public boolean checkIntLength(int intKeyLength, String key,String value){
-		if (key.length()<=intKeyLength && value.length()<=intKeyLength)
-			return true;
-		else return false;
+		else throw new Exception("Ключ не должен быть больше "+stringKeyLength+" символов ");
 	}
 	
 } 
