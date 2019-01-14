@@ -1,3 +1,4 @@
+package com.lib;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -10,7 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CrudAlgoritm implements CrudInterface{
+public class CrudAlgoritm implements ICrud{
 	
 	private Map<String,String> alpha = new HashMap<String,String>();
 	private Map<String,String> fileNew = new HashMap<String,String>();
@@ -68,7 +69,7 @@ public class CrudAlgoritm implements CrudInterface{
 	public void loadHash(String fileName) throws IOException {
 		
 			
-		FileInputStream fstream = new FileInputStream(".//"+directory+"//"+fileName);
+		FileInputStream fstream = new FileInputStream(directory+"//"+fileName);
 				br = new BufferedReader(new InputStreamReader(fstream));
 				String strLine;
 				while ((strLine = br.readLine()) != null){
@@ -102,7 +103,7 @@ public class CrudAlgoritm implements CrudInterface{
 		try {
 			if (!alpha.containsKey(key)) {			
 			fileName = ListFile.get(i);
-			BufferedWriter writer = new BufferedWriter(new FileWriter(".//"+directory+"//"+fileName, true));
+			BufferedWriter writer = new BufferedWriter(new FileWriter(directory+"//"+fileName, true));
 			writer.write(key+" "+value+"\n");			
 			writer.flush();
 			writer.close();
@@ -127,7 +128,7 @@ public class CrudAlgoritm implements CrudInterface{
 				loadHash(fileName);
 				
 				if (fileNew.get(key)!=null) {
-					FileWriter writer = new FileWriter(".//"+directory+"//"+fileName, false);
+					FileWriter writer = new FileWriter(directory+"//"+fileName, false);
 					fileNew.remove(key);
 					alpha.remove(key);
 				for (Map.Entry entry : fileNew.entrySet()) {

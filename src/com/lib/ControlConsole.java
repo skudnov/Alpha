@@ -1,4 +1,4 @@
-
+package com.lib;
 import java.util.Scanner;
 import java.util.Map;
 import java.io.IOException;
@@ -10,9 +10,9 @@ import java.util.*;
 public class ControlConsole{
 	private String key,value,command;
 	private int enterNumber;
-	private OperationInterface oper;
+	private IOperation oper;
 	private PropertyResourceBundle myRes= null;
-	ControlConsole(OperationInterface oper){
+	ControlConsole(IOperation oper){
 		this.oper = oper;
 	}
 	

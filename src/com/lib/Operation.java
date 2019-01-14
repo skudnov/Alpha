@@ -1,11 +1,12 @@
+package com.lib;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.List;
-public class Operation  implements OperationInterface {
-	private CrudInterface alg;
-	private CheckInputAlphaInterface input = new CheckInputAlpha();
+public class Operation  implements IOperation {
+	private ICrud alg;
+	private ICheckInputAlpha input = new CheckInputAlpha();
 	private static Scanner sc = new Scanner(System.in);
-	Operation(CrudInterface alg)
+	Operation(ICrud alg)
 	{
 		this.alg=alg;
 	}

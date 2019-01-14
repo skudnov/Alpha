@@ -1,7 +1,9 @@
+package com.lib;
+import com.lib.*;
 public class StartMain {
 	public static void main(String[] args) {
-		CrudInterface alg = new CrudAlgoritm();
-		OperationInterface oper = new Operation(alg);
+		ICrud alg = new CrudAlgoritm();
+		IOperation oper = new Operation(alg);
 		ControlConsole control = new ControlConsole(oper);
 		control.outputMenu();
 	}

@@ -1,4 +1,5 @@
-public class CheckInputAlpha implements CheckInputAlphaInterface{
+package com.lib;
+public class CheckInputAlpha implements ICheckInputAlpha{
 	private String validationString = "[a-zA-Z]+";
 	private String validationInt = "[0-9]+";
 	CheckInputAlpha(){}

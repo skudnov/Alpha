@@ -1,4 +1,4 @@
-
+package com.lib;
 
 public abstract class ConstRes {
     public static final String menu="Menu";

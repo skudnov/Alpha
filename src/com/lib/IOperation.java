@@ -1,7 +1,8 @@
+package com.lib;
 import java.util.Scanner;
 import java.util.Map;
 import java.util.List;
-public interface OperationInterface	{
+public interface IOperation	{
 	
 public String getValue(String key);
 

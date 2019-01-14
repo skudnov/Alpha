@@ -1,6 +1,7 @@
+package com.lib;
 import java.util.Map;
 import java.util.List;
-public interface CrudInterface	{
+public interface ICrud	{
 	public String openFile();
 	
 	public String addKey(String key,String value,int i);
