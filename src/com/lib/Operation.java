@@ -2,31 +2,40 @@ package com.lib;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.List;
+
+import org.springframework.context.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+
+@Configuration
 public class Operation  implements IOperation {
+	@Autowired
 	private ICrud alg;
-	private ICheckInputAlpha input = new CheckInputAlpha();
+	@Autowired
+	private ICheckInputAlpha input;
 	private static Scanner sc = new Scanner(System.in);
-	Operation(ICrud alg)
-	{
-		this.alg=alg;
-	}
+	Operation()	{	}
 	
+	@Bean
 	public Map<String,String> printAlpha() {
 		return alg.getHashMap();
 	}
 	
+	@Bean
 	public List<String> getAlphaName(){
 		return alg.getFileName();
 	}
 	
+	@Bean
 	public String openFile(){
 		return alg.openFile();
 	}
 	
+	@Bean
 	public String removeKey(String key,int i){
 		return alg.removeKey(key,i);
 	}
 	
+	@Bean
 	public String addKey(String key,String value,int i){
 		try{
 		FormatEnumAplha format =input.checkInputAdd(key);
@@ -67,7 +76,7 @@ public class Operation  implements IOperation {
 
 	
 	
-	
+	@Bean
 	public String getValue(String key) {
 		
 		if (alg.getKey(key)!=null)
@@ -76,6 +85,7 @@ public class Operation  implements IOperation {
 			return("По данному ключу не обнаруженно значения");
 	}
 	
+	@Bean
 	public int scannerInt(int count) throws Exception {
 		if (sc.hasNextInt()) {
 			int check= sc.nextInt();
@@ -91,12 +101,13 @@ public class Operation  implements IOperation {
 		}
 	}
 	
+	@Bean
 	public String inputString(){
-		String s = sc.next();
-		return  s;
+		String inputstring = sc.next();
+		return  inputstring;
 
 	}
-	
+	@Bean
 	public boolean checkAplhaCount(){
 		if (alg.getFileName().size()!=0)
 			return true;

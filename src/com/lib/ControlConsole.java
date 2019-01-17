@@ -7,14 +7,16 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+
 public class ControlConsole{
 	private String key,value,command;
 	private int enterNumber;
+	@Autowired
 	private IOperation oper;
 	private PropertyResourceBundle myRes= null;
-	ControlConsole(IOperation oper){
-		this.oper = oper;
-	}
+	ControlConsole(){	}
 	
 	
 	
@@ -23,7 +25,7 @@ public class ControlConsole{
 		
 		System.out.println(oper.openFile());
 		try {
-	    myRes = new PropertyResourceBundle(new FileReader("res.properties"));
+	    myRes = new PropertyResourceBundle(new FileReader("resources/res.properties"));
 		} catch (IOException e) {
             e.printStackTrace();
         }

@@ -7,7 +7,7 @@ public abstract class ConstRes {
 	public static final String printAlpha="PrintAlpha";
 	public static final String errorAlpha="ErrorAlpha";
 	public static final String printValue="PrintValue";
-	public static final String errorCommand="ErrorComand";
+	public static final String errorCommand="ErrorCommand";
 	
 	
 	}

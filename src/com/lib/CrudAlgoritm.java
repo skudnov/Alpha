@@ -11,6 +11,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.context.annotation.*;
+
+@Configuration
 public class CrudAlgoritm implements ICrud{
 	
 	private Map<String,String> alpha = new HashMap<String,String>();
@@ -20,6 +23,7 @@ public class CrudAlgoritm implements ICrud{
 	private String fileName;
 	private String directory = "fileAlpha";	
 	
+	@Bean
 	public String getFileExtension(File fullName) {
     fileName = fullName.getName();
     int dotIndex = fileName.lastIndexOf('.');
@@ -29,6 +33,7 @@ public class CrudAlgoritm implements ICrud{
     return fileName.substring(dotIndex);
 	}
 	
+	@Bean
 	public String openFile() {
 		try
 				{
@@ -66,6 +71,7 @@ public class CrudAlgoritm implements ICrud{
 		
 	}
 	
+	
 	public void loadHash(String fileName) throws IOException {
 		
 			
@@ -81,15 +87,19 @@ public class CrudAlgoritm implements ICrud{
 				
 	}
 	
+	@Bean
 	public List<String> getFileName(){
 	return ListFile;
 	}
 	
+	@Bean
 	public Map<String,String> getHashMap(){
 		
 	return new HashMap<String,String>(alpha);
 	}
 	
+	
+	@Bean
 	public String getKey(String key)
 	{
 		if (alpha.get(key)!=null)
@@ -98,6 +108,8 @@ public class CrudAlgoritm implements ICrud{
 			return null;
 	}
 	
+	
+	@Bean
 	public String addKey(String key,String value,int i) {
 		
 		try {
@@ -119,6 +131,7 @@ public class CrudAlgoritm implements ICrud{
 		}
 	}
 	
+	@Bean
 	public String removeKey(String key,int i) {
 		
 			try
