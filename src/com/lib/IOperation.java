@@ -1,24 +1,24 @@
-package com.lib;
-import java.util.Scanner;
+package lib;
+
 import java.util.Map;
 import java.util.List;
-public interface IOperation	{
-	
-public String getValue(String key);
+public interface IOperation {
 
-public int scannerInt (int count)throws Exception;
+    String getValue(String key);
 
-public Map<String,String> printAlpha();
+    int scannerInt(int count) throws Exception;
 
-public boolean checkAplhaCount();
+    Map<String, String> printAlpha();
 
-public List<String> getAlphaName();
+    boolean checkAlphaCount();
 
-public String openFile();
+    List<String> getAlphaName();
 
-public String addKey(String key,String value,int i);
+    String openFile();
 
-public String removeKey(String key,int i);
+    String addKey(String key, String value, int i);
 
-public String inputString();
+    String removeKey(String key, int i);
+
+    String inputString();
 }

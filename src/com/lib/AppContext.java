@@ -1,28 +1,27 @@
-package com.lib;
-import org.springframework.context.annotation.*;
+package lib;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 @Configuration
 public class AppContext {
-    @Bean
-    public ICrud alg() {
-        ICrud alg = new CrudAlgoritm();
-        return alg;
+    @Bean(name="crud")
+    public ICrud CrudConfig() {
+        return new Crud();
     }
- 
-    @Bean
-    public IOperation  oper() {
-       IOperation oper = new Operation();
-        return oper;
+
+    @Bean(name="opec")
+    public IOperation OperationConfig() {
+        return new Operation();
     }
- 
-    @Bean
-    public ICheckInputAlpha  input() {
-		ICheckInputAlpha input = new CheckInputAlpha();
-        return input;
+
+    @Bean(name="input")
+    public ICheckInputAlpha InputConfig() {
+        return new CheckInputAlpha();
     }
-	
-	 @Bean
-    public ControlConsole control() {
-		ControlConsole control = new ControlConsole();
-        return control;
+
+    @Bean
+    public ControlConsole ConsoleConfig() {
+        return new ControlConsole();
     }
 }

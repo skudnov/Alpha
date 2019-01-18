@@ -1,111 +1,109 @@
-package com.lib;
-import java.util.Scanner;
-import java.util.Map;
-import java.io.IOException;
-import java.util.PropertyResourceBundle;
-import java.io.FileReader;
-import java.io.InputStreamReader;
-import java.util.*;
+package lib;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Map;
+import java.util.PropertyResourceBundle;
+
+class ControlConsole {
+    @Autowired
+    @Qualifier("opec")
+    private IOperation opec;
+
+    private PropertyResourceBundle myRes = null;
+
+    ControlConsole() {
+    }
 
 
-public class ControlConsole{
-	private String key,value,command;
-	private int enterNumber;
-	@Autowired
-	private IOperation oper;
-	private PropertyResourceBundle myRes= null;
-	ControlConsole(){	}
-	
-	
-	
-	public void outputMenu(){
-		
-		
-		System.out.println(oper.openFile());
-		try {
-	    myRes = new PropertyResourceBundle(new FileReader("resources/res.properties"));
-		} catch (IOException e) {
+    void outputMenu() {
+
+
+        System.out.println(opec.openFile());
+        try {
+            myRes = new PropertyResourceBundle(new FileReader("resources/res.properties"));
+        } catch (IOException e) {
             e.printStackTrace();
         }
-		
-		
-		while(oper.checkAplhaCount()) {
-			 System.out.println(myRes.getString(ConstRes.menu));
-			 
-				  command = oper.inputString();
-		    switch(command) {
-		      case "1": 
-					System.out.println(myRes.getString(ConstRes.fullKey));
-				  
-					for (Map.Entry entry : oper.printAlpha().entrySet()) {
-						System.out.println("Key: " + entry.getKey() + " Value: "
-						+ entry.getValue());
-					}
-				  break;
-			
-			 case "2": 
-		    	  System.out.println(myRes.getString(ConstRes.printKey));
-		    	  key = oper.inputString();
-		    	  System.out.println(oper.getValue(key));
-		    	  break;
-			case "3":
-		    	  System.out.println(myRes.getString(ConstRes.printKey));
-		    	  key = oper.inputString();
-		    	  System.out.println(myRes.getString(ConstRes.printAlpha));
-				  int count =0;
-				  for(Object nameFile : oper.getAlphaName()){
-					  System.out.println(count+": "+ nameFile);
-					  count++;
-				  }	
-						while (true) {
-						try{
-                            enterNumber = oper.scannerInt(count);
-						    break;
-                        }
-                        catch (Exception e){
-						    System.out.println(e.getMessage());
+
+
+        while (opec.checkAlphaCount()) {
+            System.out.println(myRes.getString(ConstRes.menu));
+
+            String command = opec.inputString();
+            int enterNumber;
+            switch (command) {
+                case "1":
+                    System.out.println(myRes.getString(ConstRes.fullKey));
+
+                    for (Map.Entry entry : opec.printAlpha().entrySet()) {
+                        System.out.println("Key: " + entry.getKey() + " Value: "
+                                + entry.getValue());
+                    }
+                    break;
+
+                case "2":
+                    System.out.println(myRes.getString(ConstRes.printKey));
+                    String key = opec.inputString();
+                    System.out.println(opec.getValue(key));
+                    break;
+                case "3":
+                    System.out.println(myRes.getString(ConstRes.printKey));
+                    key = opec.inputString();
+                    System.out.println(myRes.getString(ConstRes.printAlpha));
+                    int count = 0;
+                    for (Object nameFile : opec.getAlphaName()) {
+                        System.out.println(count + ": " + nameFile);
+                        count++;
+                    }
+                    while (true) {
+                        try {
+                            enterNumber = opec.scannerInt(count);
+                            break;
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
 
                         }
 
-					}
-					
-		    	  System.out.println(oper.removeKey(key,enterNumber));
-		    	  break;
-		    	 
-			case "4":
-				System.out.println(myRes.getString(ConstRes.fullKey));
-				  count =0;
-				  for(Object nameFile : oper.getAlphaName()){
-					  System.out.println(count+": "+ nameFile);
-					  count++;
-				  }
-				  while (true) {
-						try{
-                            enterNumber = oper.scannerInt(count);
-						    break;
-                        }
-                        catch (Exception e){
-						    System.out.println(e.getMessage());
+                    }
+
+                    System.out.println(opec.removeKey(key, enterNumber));
+                    break;
+
+                case "4":
+                    System.out.println(myRes.getString(ConstRes.fullKey));
+                    count = 0;
+                    for (Object nameFile : opec.getAlphaName()) {
+                        System.out.println(count + ": " + nameFile);
+                        count++;
+                    }
+                    while (true) {
+                        try {
+                            enterNumber = opec.scannerInt(count);
+                            break;
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
 
                         }
 
-					}
-				  
-				  while (true) {
-				  System.out.println(myRes.getString(ConstRes.printKey));
-		    	  key = oper.inputString();
-		    	  System.out.println(myRes.getString(ConstRes.printValue));
-				  value = oper.inputString();
-				  System.out.println(oper.addKey(key, value,enterNumber));
-					break;
-				  }
-				  break;
-			default: System.out.println(myRes.getString(ConstRes.errorCommand));
-			}
-          
-		  }
-	}
-	
+                    }
+
+                    System.out.println(myRes.getString(ConstRes.printKey));
+                    key = opec.inputString();
+                    System.out.println(myRes.getString(ConstRes.printValue));
+                    String value = opec.inputString();
+                    System.out.println(opec.addKey(key, value, enterNumber));
+
+
+                    break;
+                default:
+                    System.out.println(myRes.getString(ConstRes.errorCommand));
+            }
+
+        }
+    }
+
 }

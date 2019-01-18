@@ -1,6 +1,6 @@
-package com.lib;
+package lib;
 public interface ICheckInputAlpha {
-	public FormatEnumAplha checkInputAdd(String key);
-	
-	public boolean checkLength(int intKeyLength, String key) throws Exception;
+	FormatEnumAha checkInputAdd(String key);
+
+	boolean checkLength(int intKeyLength, String key) throws Exception;
 }
