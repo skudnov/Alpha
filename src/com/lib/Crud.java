@@ -1,7 +1,6 @@
 package lib;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.*;
@@ -25,7 +24,7 @@ public class Crud implements ICrud {
 			return fileName.substring(dotIndex);
 	}
 
-	@Bean
+	@Override
 	public String openFile() {
 		try {
 			File dir = new File(".//" + directory);
@@ -72,18 +71,18 @@ public class Crud implements ICrud {
 
 	}
 
-	@Bean
+	@Override
 	public List<String> getFileName() {
 		return ListFile;
 	}
 
-	@Bean
+	@Override
 	public Map<String, String> getHashMap() {
 		return new HashMap<>(alpha);
 	}
 
 
-	@Bean
+	@Override
 	public String getValue( @Qualifier("getValue")String key) {
 		if (alpha.get(key) != null)
 			return alpha.get(key);
@@ -92,7 +91,7 @@ public class Crud implements ICrud {
 	}
 
 
-	@Bean
+	@Override
 	public String addKey(@Qualifier("addKey") String key, @Qualifier("addKey") String value, int i) {
 
 		try {
@@ -112,7 +111,7 @@ public class Crud implements ICrud {
 		}
 	}
 
-	@Bean
+	@Override
 	public String removeKey(@Qualifier("removeKey") String key, int i) {
 
 		try {

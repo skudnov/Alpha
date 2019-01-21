@@ -18,7 +18,7 @@ public class Operation  implements IOperation {
 
 	@Autowired
 	@Qualifier("input")
-	private ICheckInputAlpha input;
+	private CheckInputAlpha input;
 
 	private static Scanner sc = new Scanner(System.in);
 

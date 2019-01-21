@@ -16,7 +16,7 @@ public class AppContext {
     }
 
     @Bean(name="input")
-    public ICheckInputAlpha InputConfig() {
+    public CheckInputAlpha InputConfig() {
         return new CheckInputAlpha();
     }
 
