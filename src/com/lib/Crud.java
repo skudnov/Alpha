@@ -83,7 +83,7 @@ public class Crud implements ICrud {
 
 
 	@Override
-	public String getValue( @Qualifier("getValue")String key) {
+	public String getValue(String key) {
 		if (alpha.get(key) != null)
 			return alpha.get(key);
 		else

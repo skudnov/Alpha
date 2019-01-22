@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 public class AppContext {
     @Bean(name="crud")
     public ICrud CrudConfig() {
-        return new Crud();
+        return new DBCrud();
     }
 
     @Bean(name="opec")
