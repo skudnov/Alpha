@@ -25,7 +25,7 @@ public class Crud implements ICrud {
 	}
 
 	@Override
-	public String openFile() {
+	public String read() {
 		try {
 			File dir = new File(".//" + directory);
 
@@ -36,7 +36,7 @@ public class Crud implements ICrud {
 							fileName = item.getName();
 							ListFile.add(fileName);
 
-							loadHash(fileName);
+							loadAlphaBetValue(fileName);
 
 						}
 
@@ -56,7 +56,7 @@ public class Crud implements ICrud {
 	}
 
 
-	private void loadHash(String fileName) throws IOException {
+	private void loadAlphaBetValue(String fileName) throws IOException {
 
 
 		FileInputStream file = new FileInputStream(directory + "//" + fileName);
@@ -72,12 +72,12 @@ public class Crud implements ICrud {
 	}
 
 	@Override
-	public List<String> getFileName() {
+	public List<String> getAlphabetNames() {
 		return ListFile;
 	}
 
 	@Override
-	public Map<String, String> getHashMap() {
+	public Map<String, String> getAlphabet() {
 		return new HashMap<>(alpha);
 	}
 
@@ -92,7 +92,7 @@ public class Crud implements ICrud {
 
 
 	@Override
-	public String addKey(@Qualifier("addKey") String key, @Qualifier("addKey") String value, int i) {
+	public String create(String key, String value, int i) {
 
 		try {
 			if (!alpha.containsKey(key)) {
@@ -112,12 +112,12 @@ public class Crud implements ICrud {
 	}
 
 	@Override
-	public String removeKey(@Qualifier("removeKey") String key, int i) {
+	public String delete(String key, int i) {
 
 		try {
 			fileName = ListFile.get(i);
 			fileNew.clear();
-			loadHash(fileName);
+			loadAlphaBetValue(fileName);
 
 			if (fileNew.get(key) != null) {
 				FileWriter writer = new FileWriter(directory + "//" + fileName, false);

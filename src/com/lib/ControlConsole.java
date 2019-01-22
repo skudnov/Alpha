@@ -22,7 +22,7 @@ class ControlConsole {
     void outputMenu() {
 
 
-        System.out.println(opec.openFile());
+        System.out.println(opec.read());
         try {
             myRes = new PropertyResourceBundle(new FileReader("resources/res.properties"));
         } catch (IOException e) {
@@ -30,7 +30,7 @@ class ControlConsole {
         }
 
 
-        while (opec.checkAlphaCount()) {
+        while (opec.getAlphabetCount()) {
             System.out.println(myRes.getString(ConstRes.menu));
 
             String command = opec.inputString();
@@ -39,7 +39,7 @@ class ControlConsole {
                 case "1":
                     System.out.println(myRes.getString(ConstRes.fullKey));
 
-                    for (Map.Entry entry : opec.printAlpha().entrySet()) {
+                    for (Map.Entry entry : opec.getAlphabet().entrySet()) {
                         System.out.println("Key: " + entry.getKey() + " Value: "
                                 + entry.getValue());
                     }
@@ -55,7 +55,7 @@ class ControlConsole {
                     key = opec.inputString();
                     System.out.println(myRes.getString(ConstRes.printAlpha));
                     int count = 0;
-                    for (Object nameFile : opec.getAlphaName()) {
+                    for (Object nameFile : opec.getAlphabetNames()) {
                         System.out.println(count + ": " + nameFile);
                         count++;
                     }
@@ -70,13 +70,13 @@ class ControlConsole {
 
                     }
 
-                    System.out.println(opec.removeKey(key, enterNumber));
+                    System.out.println(opec.delete(key, enterNumber));
                     break;
 
                 case "4":
                     System.out.println(myRes.getString(ConstRes.fullKey));
                     count = 0;
-                    for (Object nameFile : opec.getAlphaName()) {
+                    for (Object nameFile : opec.getAlphabetNames()) {
                         System.out.println(count + ": " + nameFile);
                         count++;
                     }
@@ -95,7 +95,7 @@ class ControlConsole {
                     key = opec.inputString();
                     System.out.println(myRes.getString(ConstRes.printValue));
                     String value = opec.inputString();
-                    System.out.println(opec.addKey(key, value, enterNumber));
+                    System.out.println(opec.create(key, value, enterNumber));
 
 
                     break;

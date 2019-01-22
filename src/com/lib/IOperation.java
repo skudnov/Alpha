@@ -8,17 +8,17 @@ public interface IOperation {
 
     int scannerInt(int count) throws Exception;
 
-    Map<String, String> printAlpha();
+    Map<String, String> getAlphabet();
 
-    boolean checkAlphaCount();
+    boolean getAlphabetCount();
 
-    List<String> getAlphaName();
+    List<String> getAlphabetNames();
 
-    String openFile();
+    String read();
 
-    String addKey(String key, String value, int i);
+    String create(String key, String value, int i);
 
-    String removeKey(String key, int i);
+    String delete(String key, int i);
 
     String inputString();
 }
