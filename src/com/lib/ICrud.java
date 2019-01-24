@@ -8,9 +8,13 @@ public interface ICrud {
 
 	String delete(String key, int i);
 
-	Map<String, String> getAlphabet();
+	String update(String key, String value, int i);
 
-	String getValue(String key);
+	Map<String, List<String>> getAlphabet();
+
+	List<String> getValue(String key);
 
 	List<String> getAlphabetNames();
+
+
 }

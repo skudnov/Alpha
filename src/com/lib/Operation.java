@@ -24,7 +24,7 @@ public class Operation  implements IOperation {
 	Operation() {}
 
 	@Override
-	public Map<String, String> getAlphabet() {
+	public Map<String, List<String>> getAlphabet() {
 		return alg.getAlphabet();
 	}
 
@@ -39,8 +39,28 @@ public class Operation  implements IOperation {
 	}
 
 	@Override
-	public String delete(String key, int i) {
+	public String remove(String key, int i) {
 		return alg.delete(key, i);
+	}
+
+	@Override
+	public String update(String key, String value, int i) {
+		try {
+			FormatEnumAha format = input.checkInputAdd(key);
+			if (i == 0) {
+				if (format == FormatEnumAha.string) {
+					if (input.checkLength(5, key)) {
+						return alg.update(key, value, i);
+					}
+				} else {
+					return "Данный словарь является строковым";
+				}
+			}
+
+			return "Ошибка,Данные не добавлены";
+		} catch (Exception e) {
+			return e.getMessage();
+		}
 	}
 
 	@Override
@@ -50,26 +70,11 @@ public class Operation  implements IOperation {
 			if (i == 0) {
 				if (format == FormatEnumAha.string) {
 					if (input.checkLength(5, key)) {
-
 						return alg.create(key, value, i);
-
 					}
 				} else {
 					return "Данный словарь является строковым";
 				}
-
-
-			} else if (i == 1) {
-				if (format == FormatEnumAha.integer) {
-					if (input.checkLength(6, key)) {
-
-						return alg.create(key, value, i);
-					}
-				} else {
-					return "Данный словарь является цифровым";
-				}
-
-
 			}
 
 			return "Ошибка,Данные не добавлены";
@@ -82,8 +87,13 @@ public class Operation  implements IOperation {
 	@Override
 	public String getValue( String key) {
 
-		if (alg.getValue(key) != null)
-			return ("Ключ: " + key + " Значение ключа: " + alg.getValue(key));
+		String getStringValue="Ключ: " + key + " Значение ключа: " ;
+		if (alg.getValue(key) != null) {
+			for (String list: alg.getValue(key)) {
+				getStringValue +=(list + " ");
+			}
+			return getStringValue;
+		}
 		else
 			return ("По данному ключу не обнаруженно значения");
 	}

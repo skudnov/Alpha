@@ -8,7 +8,7 @@ public interface IOperation {
 
     int scannerInt(int count) throws Exception;
 
-    Map<String, String> getAlphabet();
+    Map<String, List<String>> getAlphabet();
 
     boolean getAlphabetCount();
 
@@ -18,7 +18,9 @@ public interface IOperation {
 
     String create(String key, String value, int i);
 
-    String delete(String key, int i);
+    String remove(String key, int i);
+
+    String update(String key,String value,int i);
 
     String inputString();
 }

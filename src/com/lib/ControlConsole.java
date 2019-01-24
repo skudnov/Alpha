@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.PropertyResourceBundle;
 
@@ -12,7 +13,6 @@ class ControlConsole {
     @Autowired
     @Qualifier("opec")
     private IOperation opec;
-
     private PropertyResourceBundle myRes = null;
 
     ControlConsole() {
@@ -39,7 +39,7 @@ class ControlConsole {
                 case "1":
                     System.out.println(myRes.getString(ConstRes.fullKey));
 
-                    for (Map.Entry entry : opec.getAlphabet().entrySet()) {
+                    for (Map.Entry<String, List<String>> entry: opec.getAlphabet().entrySet()) {
                         System.out.println("Key: " + entry.getKey() + " Value: "
                                 + entry.getValue());
                     }
@@ -70,7 +70,7 @@ class ControlConsole {
 
                     }
 
-                    System.out.println(opec.delete(key, enterNumber));
+                    System.out.println(opec.remove(key, enterNumber));
                     break;
 
                 case "4":
@@ -96,6 +96,32 @@ class ControlConsole {
                     System.out.println(myRes.getString(ConstRes.printValue));
                     String value = opec.inputString();
                     System.out.println(opec.create(key, value, enterNumber));
+
+
+                    break;
+                case "5":
+                    System.out.println(myRes.getString(ConstRes.fullKey));
+                    count = 0;
+                    for (Object nameFile : opec.getAlphabetNames()) {
+                        System.out.println(count + ": " + nameFile);
+                        count++;
+                    }
+                    while (true) {
+                        try {
+                            enterNumber = opec.scannerInt(count);
+                            break;
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+
+                        }
+
+                    }
+
+                    System.out.println(myRes.getString(ConstRes.printKey));
+                    key = opec.inputString();
+                    System.out.println(myRes.getString(ConstRes.printValue));
+                    value = opec.inputString();
+                    System.out.println(opec.update(key, value, enterNumber));
 
 
                     break;

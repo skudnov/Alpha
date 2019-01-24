@@ -1,6 +1,5 @@
 package lib;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.*;
@@ -9,8 +8,8 @@ import java.util.*;
 @Configuration
 public class Crud implements ICrud {
 
-	private Map<String, String> alpha = new HashMap<>();
-	private Map<String, String> fileNew = new HashMap<>();
+	private Map<String, List<String>> alpha = new HashMap<>();
+	private Map<String, List<String>> fileNew = new HashMap<>();
 	private List<String> ListFile = new ArrayList<>();
 	private String fileName;
 	private String directory = "fileAlpha";
@@ -64,8 +63,10 @@ public class Crud implements ICrud {
 		String strLine;
 		while ((strLine = br.readLine()) != null) {
 			String[] count = strLine.split(" ");
+			List<String> valueStringList = new ArrayList<>();
 			if (count.length == 2) {
-				fileNew.put(count[0], count[1]);
+				valueStringList.add(count[1]);
+				fileNew.put(count[0], valueStringList);
 			}
 		}
 
@@ -77,15 +78,16 @@ public class Crud implements ICrud {
 	}
 
 	@Override
-	public Map<String, String> getAlphabet() {
+	public Map<String, List<String>> getAlphabet() {
 		return new HashMap<>(alpha);
 	}
 
 
 	@Override
-	public String getValue(String key) {
-		if (alpha.get(key) != null)
+	public List<String> getValue(String key) {
+		if (alpha.get(key) != null) {
 			return alpha.get(key);
+		}
 		else
 			return null;
 	}
@@ -101,7 +103,9 @@ public class Crud implements ICrud {
 				writer.write(key + " " + value + "\n");
 				writer.flush();
 				writer.close();
-				alpha.put(key, value);
+				List<String> valueStringList = new ArrayList<>();
+				valueStringList.add(value);
+				alpha.put(key, valueStringList);
 				return ("Данные успешно добавлены");
 			} else return ("Данный ключ уже существует");
 
@@ -134,6 +138,11 @@ public class Crud implements ICrud {
 		} catch (Exception e) {
 			return ("Ошибка при удалении ключа");
 		}
+	}
+
+	@Override
+	public String update(String key, String value, int i) {
+		return null;
 	}
 
 }
