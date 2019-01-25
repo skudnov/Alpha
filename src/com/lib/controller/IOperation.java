@@ -1,4 +1,4 @@
-package lib;
+package lib.controller;
 
 import java.util.Map;
 import java.util.List;

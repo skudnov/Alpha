@@ -1,4 +1,4 @@
-package lib;
+package lib.dao;
 import java.util.Map;
 import java.util.List;
 public interface ICrud {

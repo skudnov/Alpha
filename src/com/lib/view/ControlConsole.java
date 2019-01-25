@@ -1,5 +1,6 @@
-package lib;
+package lib.view;
 
+import lib.controller.IOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
@@ -7,19 +8,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import lib.resource.ConstRes;
 import java.util.PropertyResourceBundle;
 
-class ControlConsole {
+public class ControlConsole {
     @Qualifier("OperationConfig")
     @Autowired
     private IOperation opec;
     private PropertyResourceBundle myRes = null;
 
-    ControlConsole() {
+    public ControlConsole() {
     }
 
 
-    void outputMenu() {
+   public void outputMenu() {
 
 
         System.out.println(opec.read());

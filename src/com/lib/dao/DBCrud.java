@@ -1,6 +1,8 @@
-package lib;
+package lib.dao;
 
 
+import lib.entity.KeyEssence;
+import lib.entity.ValueEssence;
 import org.hibernate.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.HibernateTemplate;
@@ -65,7 +67,7 @@ public class DBCrud implements ICrud {
         keyEssence  = searchKeyObj(key);
         if (keyEssence !=null) {
             for (ValueEssence list:keyEssence.getValueEssenceList()) {
-                if (list.getValue()==value) {
+                if (list.getValue().equals(value)) {
                     return "Такое значение уже существует";
                 }
             }
@@ -121,7 +123,7 @@ public class DBCrud implements ICrud {
 
     private KeyEssence searchKeyObj(String key){
 
-        Query query= hibernateTemplate.getSessionFactory().getCurrentSession().createQuery("select from  KeyEssence where key=:key");
+        Query query= hibernateTemplate.getSessionFactory().getCurrentSession().createQuery("from  KeyEssence where key=:key");
         query.setParameter("key", key);
         keyEssence = new KeyEssence();
         keyEssence =(KeyEssence) query.uniqueResult();

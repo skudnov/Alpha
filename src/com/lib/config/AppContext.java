@@ -1,9 +1,15 @@
-package lib;
+package lib.config;
 
-import org.hibernate.HibernateException;
+import lib.controller.CheckInputAlpha;
+import lib.controller.IOperation;
+import lib.controller.Operation;
+import lib.dao.Crud;
+import lib.dao.DBCrud;
+import lib.dao.ICrud;
+import lib.entity.KeyEssence;
+import lib.entity.ValueEssence;
+import lib.view.ControlConsole;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.service.ServiceRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +18,7 @@ import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -65,8 +72,13 @@ public class AppContext {
 
 
     @Bean
-    public ICrud CrudConfig() {
+    public ICrud DBCrudConfig() {
         return new DBCrud();
+    }
+
+    @Bean
+    public ICrud CrudConfig() {
+        return new Crud();
     }
 
     @Bean

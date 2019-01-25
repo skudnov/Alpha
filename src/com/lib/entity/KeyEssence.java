@@ -1,10 +1,7 @@
-package lib;
+package lib.entity;
 
-
-import org.hibernate.FlushMode;
 
 import javax.persistence.*;
-import java.security.Key;
 import java.util.ArrayList;
 import java.util.List;
 

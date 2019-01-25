@@ -1,14 +1,14 @@
-package lib;
+package lib.controller;
 
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CheckInputAlpha{
 
-	CheckInputAlpha() {
+	public CheckInputAlpha() {
 	}
 
-	public FormatEnumAha checkInputAdd( String key) {
+	FormatEnumAha checkInputAdd(String key) {
 		String validationString = "[a-zA-Z]+";
 		String validationInt = "[0-9]+";
 		if (key.matches(validationString)) {
@@ -19,7 +19,7 @@ public class CheckInputAlpha{
 		return FormatEnumAha.mix;
 	}
 
-	public boolean checkLength(int stringKeyLength, String key) throws Exception {
+	boolean checkLength(int stringKeyLength, String key) throws Exception {
 		if (key.length() <= stringKeyLength)
 			return true;
 		else throw new Exception("Ключ не должен быть больше " + stringKeyLength + " символов ");

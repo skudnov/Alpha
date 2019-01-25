@@ -1,5 +1,6 @@
-package lib;
+package lib.controller;
 
+import lib.dao.ICrud;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +12,7 @@ import java.util.Scanner;
 @Configuration
 public class Operation  implements IOperation {
 
-	@Qualifier("CrudConfig")
+	@Qualifier("DBCrudConfig")
 	@Autowired
 	private ICrud alg;
 
@@ -21,7 +22,7 @@ public class Operation  implements IOperation {
 
 	private static Scanner sc = new Scanner(System.in);
 
-	Operation() {}
+	public Operation() {}
 
 	@Override
 	public Map<String, List<String>> getAlphabet() {
@@ -87,12 +88,12 @@ public class Operation  implements IOperation {
 	@Override
 	public String getValue( String key) {
 
-		String getStringValue="Ключ: " + key + " Значение ключа: " ;
+		StringBuilder getStringValue= new StringBuilder("Ключ: " + key + " Значение ключа: ");
 		if (alg.getValue(key) != null) {
 			for (String list: alg.getValue(key)) {
-				getStringValue +=(list + " ");
+				getStringValue.append(list).append(" ");
 			}
-			return getStringValue;
+			return getStringValue.toString();
 		}
 		else
 			return ("По данному ключу не обнаруженно значения");

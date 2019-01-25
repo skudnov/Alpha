@@ -1,5 +1,7 @@
-package lib;
+package lib.entity;
 
+
+import lib.entity.KeyEssence;
 
 import javax.persistence.*;
 

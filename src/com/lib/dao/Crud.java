@@ -1,4 +1,4 @@
-package lib;
+package lib.dao;
 
 import org.springframework.context.annotation.Configuration;
 
