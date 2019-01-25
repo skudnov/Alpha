@@ -22,7 +22,7 @@ public class KeyEssence {
     @Column(name = "type")
     private String type;
 
-    @OneToMany(mappedBy = "keyEssence", fetch = FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy = "keyEssence", fetch = FetchType.EAGER , orphanRemoval = true,cascade = CascadeType.ALL)
     private List<ValueEssence> valueEssenceList;
 
     public KeyEssence(){

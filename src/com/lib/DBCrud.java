@@ -66,12 +66,10 @@ public class DBCrud implements ICrud {
     public String update(String key, String value, int i){
         keyEssence = new KeyEssence();
         keyEssence  = searchKeyObj(key);
-        System.out.println(keyEssence.toString());
         if (keyEssence !=null) {
             ValueEssence valueEssence = new ValueEssence(value);
             valueEssence.setKey(keyEssence);
             keyEssence.addValue(valueEssence);
-            System.out.println( valueEssence.toString());
 
 
             Session session = HibernateUtil.getSessionFactory().openSession();
@@ -80,10 +78,9 @@ public class DBCrud implements ICrud {
             tx1.commit();
             session.close();
             valueStringList = alpha.get(key);
-            if (valueStringList == null) {
-                valueStringList = new ArrayList<>();
-                alpha.put(key, valueStringList);
-            }
+            valueStringList.add(value);
+            alpha.put(key, valueStringList);
+
 
             return "Значение успешно добавлено";
         }
