@@ -10,8 +10,8 @@ import java.util.Map;
 import java.util.PropertyResourceBundle;
 
 class ControlConsole {
+    @Qualifier("OperationConfig")
     @Autowired
-    @Qualifier("opec")
     private IOperation opec;
     private PropertyResourceBundle myRes = null;
 

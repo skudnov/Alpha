@@ -1,24 +1,26 @@
 package lib;
 
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.hibernate.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Array;
 import java.util.*;
-
+@Transactional
 public class DBCrud implements ICrud {
     private Map<String, List<String>> alpha = new HashMap<>();
     private List<String> ListFile = new ArrayList<>();
     private KeyEssence keyEssence;
     private List<String> valueStringList;
+    @Autowired
+    HibernateTemplate hibernateTemplate;
 
     public DBCrud (){}
 
     @Override
     public String read() {
-        List<KeyEssence> essence = HibernateUtil.getSessionFactory().openSession().createQuery("from KeyEssence").list();
+        List<KeyEssence> essence = (List<KeyEssence>) hibernateTemplate.getSessionFactory().getCurrentSession().createQuery("from KeyEssence").list();
         String key = null;
         List<String> valueStringList;
         for (KeyEssence keyobj : essence) {
@@ -50,12 +52,7 @@ public class DBCrud implements ICrud {
             ValueEssence valueEssence = new ValueEssence(value);
             valueEssence.setKey(keyEssence);
             keyEssence.addValue(valueEssence);
-
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            Transaction tx1 = session.beginTransaction();
-            session.save(keyEssence);
-            tx1.commit();
-            session.close();
+            hibernateTemplate.save(keyEssence);
             alpha.put(key, new ArrayList<String>(Arrays.asList(value)));
             return "Успешно добавленно";
         }
@@ -67,16 +64,17 @@ public class DBCrud implements ICrud {
         keyEssence = new KeyEssence();
         keyEssence  = searchKeyObj(key);
         if (keyEssence !=null) {
+            for (ValueEssence list:keyEssence.getValueEssenceList()) {
+                if (list.getValue()==value) {
+                    return "Такое значение уже существует";
+                }
+            }
             ValueEssence valueEssence = new ValueEssence(value);
             valueEssence.setKey(keyEssence);
             keyEssence.addValue(valueEssence);
 
 
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            Transaction tx1 = session.beginTransaction();
-            session.update(keyEssence);
-            tx1.commit();
-            session.close();
+            hibernateTemplate.update(keyEssence);
             valueStringList = alpha.get(key);
             valueStringList.add(value);
             alpha.put(key, valueStringList);
@@ -93,12 +91,7 @@ public class DBCrud implements ICrud {
     public String delete(String key, int i) {
         keyEssence = searchKeyObj(key);
         if(keyEssence !=null) {
-            Session session = HibernateUtil.getSessionFactory().openSession();
-            Transaction tx1 = session.beginTransaction();
-            session.delete(keyEssence);
-
-            tx1.commit();
-            session.close();
+            hibernateTemplate.delete(keyEssence);
             alpha.remove(key);
             return "Успешно удаленно";
         }
@@ -127,13 +120,11 @@ public class DBCrud implements ICrud {
 
 
     private KeyEssence searchKeyObj(String key){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Query query= session.createQuery("from KeyEssence where key=:key");
+
+        Query query= hibernateTemplate.getSessionFactory().getCurrentSession().createQuery("select from  KeyEssence where key=:key");
         query.setParameter("key", key);
         keyEssence = new KeyEssence();
         keyEssence =(KeyEssence) query.uniqueResult();
-        session.close();
-
         return keyEssence;
     }
 }

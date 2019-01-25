@@ -11,12 +11,12 @@ import java.util.Scanner;
 @Configuration
 public class Operation  implements IOperation {
 
+	@Qualifier("CrudConfig")
 	@Autowired
-	@Qualifier("crud")
 	private ICrud alg;
 
+	@Qualifier("InputConfig")
 	@Autowired
-	@Qualifier("input")
 	private CheckInputAlpha input;
 
 	private static Scanner sc = new Scanner(System.in);

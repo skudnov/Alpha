@@ -2,12 +2,19 @@ package lib;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
 
 class HibernateUtil {
     private static final SessionFactory sessionFactory= configureSessionFactory();
+
+    public HibernateTransactionManager transactionManager(SessionFactory s) {
+        HibernateTransactionManager txManager = new HibernateTransactionManager();
+        txManager.setSessionFactory(s);
+        return txManager;
+    }
 
     private static SessionFactory configureSessionFactory()
             throws HibernateException {
@@ -36,8 +43,8 @@ class HibernateUtil {
                 .addAnnotatedClass(KeyEssence.class)
                 .addAnnotatedClass(ValueEssence.class)
                 ;
-        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(
-                configuration.getProperties()).buildServiceRegistry();
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
+                configuration.getProperties()).build();
         return configuration.buildSessionFactory(serviceRegistry);
     }
 
