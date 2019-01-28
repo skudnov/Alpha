@@ -13,14 +13,15 @@ public class Crud implements ICrud {
 	private List<String> ListFile = new ArrayList<>();
 	private String fileName;
 	private String directory = "fileAlpha";
+	private List<String> valueStringList;
 
-	private String getFileExtension(File fullName) {
+	private int getFileExtension(File fullName) {
 		fileName = fullName.getName();
 		int dotIndex = fileName.lastIndexOf('.');
 		if (dotIndex == -1)
-			return "zero";
+			return -1;
 		else
-			return fileName.substring(dotIndex);
+			return dotIndex;
 	}
 
 	@Override
@@ -31,10 +32,9 @@ public class Crud implements ICrud {
 			if (dir.isDirectory()) {
 				if (Objects.requireNonNull(dir.listFiles()).length != 0) {
 					for (File item : Objects.requireNonNull(dir.listFiles())) {
-						if (getFileExtension(item).equals(".txt")) {
-							fileName = item.getName();
-							ListFile.add(fileName);
-
+						int dotIndex = getFileExtension(item);
+						if (item.getName().contains(".txt")) {
+							ListFile.add(item.getName().substring(0, dotIndex));
 							loadAlphaBetValue(fileName);
 
 						}
@@ -64,10 +64,15 @@ public class Crud implements ICrud {
 		while ((strLine = br.readLine()) != null) {
 			String[] count = strLine.split(" ");
 			List<String> valueStringList = new ArrayList<>();
-			if (count.length == 2) {
-				valueStringList.add(count[1]);
-				fileNew.put(count[0], valueStringList);
+			for (int i = 0; i < count.length; i++) {
+
+				if (i != 0) {
+					valueStringList.add(count[i]);
+				}
 			}
+			fileNew.put(count[0], valueStringList);
+
+
 		}
 
 	}
@@ -87,8 +92,7 @@ public class Crud implements ICrud {
 	public List<String> getValue(String key) {
 		if (alpha.get(key) != null) {
 			return alpha.get(key);
-		}
-		else
+		} else
 			return null;
 	}
 
@@ -121,16 +125,20 @@ public class Crud implements ICrud {
 		try {
 			fileName = ListFile.get(i);
 			fileNew.clear();
-			loadAlphaBetValue(fileName);
+			loadAlphaBetValue(fileName + ".txt");
 
 			if (fileNew.get(key) != null) {
-				FileWriter writer = new FileWriter(directory + "//" + fileName, false);
+				FileWriter writer = new FileWriter(directory + "//" + fileName+".txt", false);
 				fileNew.remove(key);
 				alpha.remove(key);
 				for (Map.Entry entry : fileNew.entrySet()) {
-					writer.write(entry.getKey() + " " + entry.getValue());
-					writer.append('\n');
-
+					String write = entry.getKey() + " ";
+					List<String> strings = (List<String>) entry.getValue();
+					for (String string:strings ) {
+						write =write +string+" ";
+					}
+					write=write + '\n';
+					writer.write(write);
 				}
 				writer.flush();
 				return ("Успешно удалено");
@@ -142,7 +150,35 @@ public class Crud implements ICrud {
 
 	@Override
 	public String update(String key, String value, int i) {
-		return null;
+
+		try {
+			fileName = ListFile.get(i);
+			fileNew.clear();
+			loadAlphaBetValue(fileName + ".txt");
+			if (fileNew.get(key) != null) {
+
+				valueStringList = fileNew.get(key);
+				alpha.remove(key);
+				valueStringList.add(value);
+				fileNew.put(key, valueStringList);
+				alpha.put(key, valueStringList);
+				FileWriter writer = new FileWriter(directory + "//" + fileName+".txt", false);
+				for (Map.Entry entry : fileNew.entrySet()) {
+					String write = entry.getKey() + " ";
+					List<String> strings = (List<String>) entry.getValue();
+					for (String string:strings ) {
+						write =write +string+" ";
+					}
+					write=write + '\n';
+					writer.write(write);
+
+				}
+				writer.flush();
+				return ("Успешно добавленно");
+			} else return ("Данный ключ не обнаружен");
+		} catch (Exception e) {
+			return ("Ошибка при удалении ключа");
+		}
 	}
 
 }

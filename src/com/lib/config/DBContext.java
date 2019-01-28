@@ -19,7 +19,6 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.Properties;
@@ -27,7 +26,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan("lib")
-public class AppContext {
+public class DBContext {
 
     @Bean
     public SessionFactory sessionFactory() {
@@ -72,13 +71,8 @@ public class AppContext {
 
 
     @Bean
-    public ICrud DBCrudConfig() {
-        return new DBCrud();
-    }
-
-    @Bean
     public ICrud CrudConfig() {
-        return new Crud();
+        return new DBCrud();
     }
 
     @Bean

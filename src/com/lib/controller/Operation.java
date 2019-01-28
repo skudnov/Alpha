@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -12,7 +13,8 @@ import java.util.Scanner;
 @Configuration
 public class Operation  implements IOperation {
 
-	@Qualifier("DBCrudConfig")
+	List<String> ListFile = new ArrayList<>();
+	@Qualifier("CrudConfig")
 	@Autowired
 	private ICrud alg;
 
@@ -31,7 +33,8 @@ public class Operation  implements IOperation {
 
 	@Override
 	public List<String> getAlphabetNames() {
-		return alg.getAlphabetNames();
+		ListFile = alg.getAlphabetNames();
+		return ListFile;
 	}
 
 	@Override
@@ -48,15 +51,15 @@ public class Operation  implements IOperation {
 	public String update(String key, String value, int i) {
 		try {
 			FormatEnumAha format = input.checkInputAdd(key);
-			if (i == 0) {
-				if (format == FormatEnumAha.string) {
-					if (input.checkLength(5, key)) {
+			String formatList = ListFile.get(i);
+			if (formatList.equals(format.toString())) {
+				if (input.checkLength(5, key)) {
 						return alg.update(key, value, i);
 					}
 				} else {
 					return "Данный словарь является строковым";
 				}
-			}
+
 
 			return "Ошибка,Данные не добавлены";
 		} catch (Exception e) {
@@ -68,15 +71,15 @@ public class Operation  implements IOperation {
 	public String create(String key, String value, int i) {
 		try {
 			FormatEnumAha format = input.checkInputAdd(key);
-			if (i == 0) {
-				if (format == FormatEnumAha.string) {
+				String formatList = ListFile.get(i);
+				if (formatList.equals(format.toString())) {
 					if (input.checkLength(5, key)) {
 						return alg.create(key, value, i);
 					}
 				} else {
-					return "Данный словарь является строковым";
+					return "Данный словарь является "+formatList;
 				}
-			}
+
 
 			return "Ошибка,Данные не добавлены";
 		} catch (Exception e) {
