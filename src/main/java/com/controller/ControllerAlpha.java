@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @Controller
 public class ControllerAlpha {
 
@@ -51,9 +50,9 @@ public class ControllerAlpha {
                     resultString= alg.create(key,value,idGroup);
                 }
             } else {
-                resultString="Данный словарь является "+ idGroup;
+                resultString="This dictionary is"+ idGroup;
             }
-            resultString="Ошибка,Данные не добавлены";
+            resultString="Error, no data added";
         } catch (Exception e) {
             resultString= e.getMessage();
         }
@@ -91,7 +90,7 @@ public class ControllerAlpha {
 
     @RequestMapping(params = "key",value = "/search/",method = RequestMethod.GET)
     public String search( @RequestParam(name = "key") String key,ModelMap model) {
-        StringBuilder getStringValue= new StringBuilder("Ключ: " + key + " Значение ключа: ");
+        StringBuilder getStringValue= new StringBuilder("Ключ: " + key + " Key value: ");
         if (alg.getValue(key) != null) {
             for (String list: alg.getValue(key)) {
                 getStringValue.append(list).append(" ");
@@ -99,7 +98,7 @@ public class ControllerAlpha {
             getStringValue.toString();
         }
         else
-            getStringValue.append("По данному ключу не обнаруженно значения");
+            getStringValue.append("No value detected for this key.");
         model.addAttribute("getStringValue", getStringValue);
         return "search";
 
@@ -122,7 +121,7 @@ public class ControllerAlpha {
                    resultString= alg.update(key, value, idGroup);
                 }
             } else {
-                resultString= "Данный словарь является строковым";
+                resultString= "This dictionary is a string";
             }
         } catch (Exception e) {
             resultString= e.getMessage();

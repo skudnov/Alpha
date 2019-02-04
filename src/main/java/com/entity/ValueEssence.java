@@ -1,6 +1,8 @@
 package com.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 
@@ -42,7 +44,7 @@ public class ValueEssence {
         this.value = value;
     }
 
-
+    @JsonIgnore
     public KeyEssence getKey() {
         return this.keyEssence;
     }

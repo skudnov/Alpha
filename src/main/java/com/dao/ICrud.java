@@ -1,5 +1,7 @@
 package com.dao;
 
+import com.entity.KeyEssence;
+
 import java.util.Map;
 import java.util.List;
 public interface ICrud {
@@ -17,5 +19,8 @@ public interface ICrud {
 
     List<String> getAlphabetNames();
 
+    KeyEssence searchKeyObj(String key);
+
+    List<KeyEssence> getEssence();
 
 }

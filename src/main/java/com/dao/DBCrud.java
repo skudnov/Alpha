@@ -4,8 +4,6 @@ import com.entity.KeyEssence;
 import com.entity.ValueEssence;
 import org.hibernate.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
@@ -18,12 +16,13 @@ public class DBCrud implements ICrud {
     public SessionFactory sessionFactory;
    // public HibernateTemplate hibernateTemplate;
     public Session session;
+    public List<KeyEssence> essence;
     public DBCrud (){}
 
     @Override
     public String read() {
         session =sessionFactory.getCurrentSession();
-        List<KeyEssence> essence = (List<KeyEssence>) session.createQuery("from KeyEssence").list();
+        essence = (List<KeyEssence>) session.createQuery("from KeyEssence").list();
         String key = null;
         List<String> valueStringList;
         for (KeyEssence keyobj : essence) {
@@ -41,7 +40,7 @@ public class DBCrud implements ICrud {
                 alpha.put(key, valueStringList);
 
         }
-        return "Данные успешно загруженны";
+        return "Data successfully loaded";
     }
 
     @Override
@@ -59,15 +58,15 @@ public class DBCrud implements ICrud {
                     session = sessionFactory.getCurrentSession();
                     session.save(keyEssence);
                     alpha.put(key, new ArrayList<String>(Arrays.asList(value)));
-                    return ("Данные успешно добавлены");
+                    return ("Data successfully added");
                 }
             }
-            else return ("Данный ключ уже существует");
+            else return ("This key already exists");
         } catch (Exception e) {
-            return ("Ошибка при добавлении ключа");
+            return ("Error adding key");
         }
 
-        return "что-то пошло не так,повторите попытку позже";
+        return "no data added, please try again later";
     }
 
 
@@ -78,7 +77,7 @@ public class DBCrud implements ICrud {
         if (keyEssence !=null) {
             for (ValueEssence list:keyEssence.getValueEssenceList()) {
                 if (list.getValue().equals(value)) {
-                    return "Такое значение уже существует";
+                    return "This value already exists.";
                 }
             }
             ValueEssence valueEssence = new ValueEssence(value);
@@ -91,10 +90,10 @@ public class DBCrud implements ICrud {
             alpha.put(key, valueStringList);
 
 
-            return "Значение успешно добавлено";
+            return "Value added successfully";
         }
         else{
-            return  "Данного ключа не существует";
+            return  "This key does not exist.";
         }
     }
 
@@ -107,13 +106,13 @@ public class DBCrud implements ICrud {
                 session =sessionFactory.getCurrentSession();
                 session.delete(keyEssence);
                 alpha.remove(key);
+                return "successfully deleted";
             }else {
-                return "данный ключ не обнаружен";
+                return "Key not detected";
             }
         } catch (Exception e) {
-            return ("Ошибка при удалении ключа");
+            return ("error deleting key");
         }
-        return "что-то пошло не так,повторите попытку позже";
     }
 
     @Override
@@ -143,5 +142,8 @@ public class DBCrud implements ICrud {
         keyEssence = new KeyEssence();
         keyEssence =(KeyEssence) query.uniqueResult();
         return keyEssence;
+    }
+    public List<KeyEssence> getEssence(){
+        return essence;
     }
 }
